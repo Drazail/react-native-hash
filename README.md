@@ -4,14 +4,9 @@
 
 `$ npm install react-native-hash --save`
 
-### Mostly automatic installation
-
-`$ react-native link react-native-hash`
-
 ## Usage
 ```javascript
 import RnHash from 'react-native-hash';
 
-// TODO: What to do with the module?
-RnHash;
+RnHash.hashFile(url, algorithm).then(hash=>console.log(hash)).catch(e=>console.log(e));
 ```
