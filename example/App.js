@@ -58,7 +58,7 @@ const App: () => React$Node = () => {
         title="press to hash File"
         onPress={() =>
           RNHash.hashFile(
-            '//storage/emulated/0/Download/New Text Document (3).txt',
+            '//storage/emulated/0/Download/k.mp3',
             'md5',
           )
             .then(b => setFileHash(b))

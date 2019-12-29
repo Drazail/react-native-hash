@@ -1,8 +1,8 @@
 {
   "name": "react-native-hash",
   "title": "React Native Hash",
-  "version": "1.0.0",
-  "description": "TODO",
+  "version": "0.1.0",
+  "description": "native hashing for android",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,14 +13,25 @@
     "baseUrl": "https://github.com/Drazail/react-native-hash"
   },
   "keywords": [
-    "react-native"
+    "react",
+    "react-native",
+    "react-native-hash",
+    "hash",
+    "MD2",
+    "MD5",
+    "SHA-1",
+    "SHA-224",
+    "SHA-256",
+    "SHA-384",
+    "SHA-512",
+    "android"
   ],
   "author": {
     "name": "Drazail",
-    "email": "yourname@email.com"
+    "email": "reza.y.3@email.com"
   },
-  "license": "MIT",
-  "licenseFilename": "LICENSE",
+  "deprecated": false,
+  "license": "Apache-2.0",
   "readmeFilename": "README.md",
   "peerDependencies": {
     "react": "^16.8.1",
@@ -29,5 +40,5 @@
   "devDependencies": {
     "react": "^16.8.3",
     "react-native": "^0.61.5"
-  }
+  },
 }
