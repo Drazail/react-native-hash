@@ -17,9 +17,15 @@ RnHash.hashUrl(url, algorithm).then(hash=>console.log(hash)).catch(e=>console.lo
 RnHash.hashString(string, algorithm).then(hash=>console.log(hash)).catch(e=>console.log(e));
 ```
 
+## Topics
 
-* only supports android at this point
+* [documentation](https://github.com/Drazail/react-native-hash/wiki/Documentation)
+* [to do](https://github.com/Drazail/react-native-hash/wiki/To-Do)
+* [contribution guide](https://github.com/Drazail/react-native-hash/wiki/Contribution-Guide)
+* [code of conduct](https://github.com/Drazail/react-native-hash/wiki/Code-of-Conduct)
 
+
+### only supports android at this point
 
 ### Todo
 |  |iOS |Android|windows|
