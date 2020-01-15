@@ -46,6 +46,8 @@ const App: () => React$Node = () => {
         onPress={() =>
           RNHash.hashUrl(
             'https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.doc',
+            'GET',
+            {'Content-type': 'application/json'},
             'md5',
           )
             .then(b => setUrlHash(b))

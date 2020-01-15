@@ -1,7 +1,6 @@
 package com.drazail.RNHash.Utils;
 
 import com.facebook.react.bridge.Promise;
-import java.io.FileNotFoundException;
 
 public class RejectionExceptions extends Exception {
 

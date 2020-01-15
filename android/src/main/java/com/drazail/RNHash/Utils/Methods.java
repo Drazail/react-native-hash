@@ -1,6 +1,7 @@
 package com.drazail.RNHash.Utils;
 
 import com.facebook.react.bridge.Promise;
+
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.util.HashMap;
@@ -41,4 +42,4 @@ final public class Methods {
         }
     }
 
-    }
+}

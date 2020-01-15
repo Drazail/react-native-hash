@@ -1,7 +1,10 @@
 package com.drazail.RNHash;
 
 public final class C {
-    private C() {}
+    private C() {
+    }
 
-    public enum errorMessages {isDirectory, FileNotFound };
+    public enum errorMessages {isDirectory, FileNotFound}
+
+    ;
 }

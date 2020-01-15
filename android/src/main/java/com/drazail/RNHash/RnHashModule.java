@@ -6,12 +6,15 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import static com.drazail.RNHash.Utils.Methods.hash;
@@ -19,7 +22,6 @@ import static com.drazail.RNHash.Utils.RejectionExceptions.rejectFileIsDirectory
 import static com.drazail.RNHash.Utils.RejectionExceptions.rejectFileNotFound;
 
 public class RnHashModule extends ReactContextBaseJavaModule {
-
 
 
     public RnHashModule(ReactApplicationContext reactContext) {
@@ -32,7 +34,7 @@ public class RnHashModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void hashFile(String uri, String algorithm,  final Promise callback) {
+    public void hashFile(String uri, String algorithm, final Promise callback) {
 
         try {
             File file = new File(uri);
@@ -48,14 +50,13 @@ public class RnHashModule extends ReactContextBaseJavaModule {
             }
             FileInputStream inputStream = new FileInputStream(uri);
 
-            hash(inputStream,algorithm,callback);
+            hash(inputStream, algorithm, callback);
         } catch (FileNotFoundException e) {
             String message = e.getMessage();
 
-            if (message.equals(errorMessages.isDirectory.name())){
+            if (message.equals(errorMessages.isDirectory.name())) {
                 rejectFileIsDirectory(callback);
-            }
-            else {
+            } else {
                 rejectFileNotFound(callback, uri);
             }
         } catch (Exception e) {
@@ -64,30 +65,42 @@ public class RnHashModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void hashUrl(String url, String algorithm,  final Promise callback) {
+    public void hashUrl(String url, String method, ReadableMap headers, String algorithm, final Promise callback) {
+
 
         try {
-            InputStream inputStream = new URL(url).openStream();
-            ToRunnable runnable = new ToRunnable(()->{
+            ToRunnable runnable = new ToRunnable(() -> {
                 try {
-                    hash(inputStream,algorithm,callback);
+                    HttpURLConnection connection = null;
+                    URL target = new URL(url);
+                    connection = (HttpURLConnection) target.openConnection();
+                    connection.setRequestMethod(method);
+                    for (
+                            ReadableMapKeySetIterator keyIterator = headers.keySetIterator();
+                            keyIterator.hasNextKey();
+                    ) {
+                        String key = keyIterator.nextKey();
+                        connection.setRequestProperty(key, headers.getString(key));
+                    }
+
+                    InputStream inputStream = connection.getInputStream();
+                    hash(inputStream, algorithm, callback);
                 } catch (Exception e) {
                     callback.reject(e);
                 }
             });
             runnable.run();
-
         } catch (Exception e) {
             callback.reject(e);
         }
     }
 
     @ReactMethod
-    public void hashString(String string, String algorithm,  final Promise callback) {
+    public void hashString(String string, String algorithm, final Promise callback) {
 
         try {
             InputStream inputStream = new ByteArrayInputStream(string.getBytes());
-            hash(inputStream,algorithm,callback);
+            hash(inputStream, algorithm, callback);
         } catch (Exception e) {
             callback.reject(e);
         }
