@@ -12,10 +12,11 @@
 ```javascript
 import RnHash from 'react-native-hash';
 
-RnHash.hashFile(uri, algorithm).then(hash=>console.log(hash)).catch(e=>console.log(e));
-RnHash.hashUrl(url, algorithm).then(hash=>console.log(hash)).catch(e=>console.log(e));
-RnHash.hashString(string, algorithm).then(hash=>console.log(hash)).catch(e=>console.log(e));
+RnHash.hashFile(uri: string, algorithm: string).then(hash=>console.log(hash)).catch(e=>console.log(e));
+RnHash.hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>, algorithm: string).then(hash=>console.log(hash)).catch(e=>console.log(e));
+RnHash.hashString(string: string, algorithm: string).then(hash=>console.log(hash)).catch(e=>console.log(e));
 ```
+check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c12f61d968aa4c647a1c98f06ca31e591381/example/App.js#L47-L54) for more information.
 
 ## Topics
 
