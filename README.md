@@ -22,7 +22,9 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c1
 
 ### Other Platforms
 
-Native hashing is only implemented on Android at this point. however, til I get around writing native modules for windows and iOs ( or if some kind soal makes a PR), you can use `JSHash` function on other platforms as:
+Native hashing is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soal makes a PR), you can use `JSHash`:
+
+#### algorithm : 
 
 `"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "sha3"`
 
@@ -31,7 +33,7 @@ import { JSHash } from 'react-native-hash';
 
 JSHash(string: string, algorithm: string).then(hash=>console.log(hash)).catch(e=>console.log(e));
 ```
-check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c12f61d968aa4c647a1c98f06ca31e591381/example/App.js#L47-L54) for more information.
+check out the [example](https://github.com/Drazail/react-native-hash/blob/f992bdb09b1df5652a3b1590ca6e903a077ad4e6/example/App.js#L88-L90) for more information.
 
 
 ## Topics
@@ -42,7 +44,7 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c1
 * [code of conduct](https://github.com/Drazail/react-native-hash/wiki/Code-of-Conduct)
 
 
-#### Hashing files or urls are only supported on android at this point
+#### Hashing files and urls are only supported on android at this point
 
 ### Todo
 |  |iOS |Android|windows|
@@ -51,7 +53,7 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c1
 |hash network assets|:x:|:heavy_check_mark: |:x:|
 |hash network responses|:x:|:heavy_check_mark:|:x:|
 |hash bundle assets|:x:|:x:|:x:|
-|hash strings|:x:|:heavy_check_mark:|:x:|
+|hash strings|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
 
 
 * all PRs are welcome
