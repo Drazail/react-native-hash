@@ -9,7 +9,7 @@
 import React, {useState} from 'react';
 import {Text, PermissionsAndroid, Button} from 'react-native';
 
-import RNHash, {JSHash} from 'react-native-hash';
+import RNHash, { JSHash } from 'react-native-hash';
 
 async function requestPermission() {
   try {
