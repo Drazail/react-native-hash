@@ -9,7 +9,7 @@
 import React, {useState} from 'react';
 import {Text, PermissionsAndroid, Button} from 'react-native';
 
-import RNHash from 'react-native-hash';
+import RNHash, {JSHash} from 'react-native-hash';
 
 async function requestPermission() {
   try {
@@ -39,6 +39,7 @@ const App: () => React$Node = () => {
   const [urlHash, setUrlHash] = useState('NA');
   const [fileHash, setFileHash] = useState('NA');
   const [stringlHash, setStringHash] = useState('NA');
+  const [jsStringlHash, setJsStringHash] = useState('NA');
   return (
     <>
       <Button
@@ -69,16 +70,28 @@ const App: () => React$Node = () => {
         press to hash File
       </Button>
       <Text>hash: {fileHash}</Text>
+
       <Button
         title="press to hash String"
         onPress={() =>
-          RNHash.hashString('the brown fox jumped over the lazy dog', 'md5')
+          RNHash.hashString('The quick brown fox jumps over the lazy dog', 'md5')
             .then(b => setStringHash(b))
             .catch(er => console.log(er))
         }>
         press to hash String
       </Button>
       <Text>hash: {stringlHash}</Text>
+
+      <Button
+        title="press to hash String using JS"
+        onPress={() =>
+          JSHash('The quick brown fox jumps over the lazy dog', 'md5')
+            .then(b => setJsStringHash(b))
+            .catch(er => console.log(er))
+        }>
+        press to hash String
+      </Button>
+      <Text>hash: {jsStringlHash}</Text>
     </>
   );
 };
