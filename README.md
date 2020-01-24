@@ -26,9 +26,10 @@ Native hashing is only implemented on Android, however, until I get around writi
 
 #### algorithm : 
 
-`"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "sha3"`
+`"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "keccak"`
 
 ```javascript
+
 import { JSHash } from 'react-native-hash';
 
 JSHash(string: string, algorithm: string).then(hash=>console.log(hash)).catch(e=>console.log(e));

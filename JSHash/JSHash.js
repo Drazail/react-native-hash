@@ -45,9 +45,9 @@ const hashString = async (string, algorithm) => {
       const sha384hash = await SHA384(string);
       return Hex.stringify(sha384hash);
     }
-    case 'sha3': {
-      const sha3hash = await SHA3(string);
-      return Hex.stringify(sha3hash);
+    case 'keccak': {
+      const keccakhash = await SHA3(string);
+      return Hex.stringify(keccakhash);
     }
     default:
       throw new Error(`${algorithm} algorithm is not suported`);

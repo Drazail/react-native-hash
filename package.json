@@ -1,11 +1,11 @@
 {
   "name": "react-native-hash",
   "title": "React Native Hash",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "description": "A hashing library for react-native",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -49,7 +49,9 @@
     "jest": "^24.9.0"
   },
   "jest": {
-    "testRegex": "(/__tests__/.*\\.test\\.js)$"
+    "testRegex": "(/__tests__/.*\\.test\\.js)$",
+    "collectCoverage": true,
+    "coverageReporters": ["json", "html"]
   }
 }
 
