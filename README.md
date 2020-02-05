@@ -22,7 +22,7 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c1
 
 ### Other Platforms
 
-Native hashing is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soal makes a PR), you can use `JSHash`:
+Native hashing is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soul makes a PR), you can use `JSHash`:
 
 #### algorithm : 
 
