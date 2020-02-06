@@ -18,6 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import static com.drazail.RNHash.Utils.Methods.hash;
+import static com.drazail.RNHash.Utils.Methods.hmac;
 import static com.drazail.RNHash.Utils.RejectionExceptions.rejectFileIsDirectory;
 import static com.drazail.RNHash.Utils.RejectionExceptions.rejectFileNotFound;
 
@@ -71,7 +72,7 @@ public class RnHashModule extends ReactContextBaseJavaModule {
         try {
             ToRunnable runnable = new ToRunnable(() -> {
                 try {
-                    HttpURLConnection connection = null;
+                    HttpURLConnection connection;
                     URL target = new URL(url);
                     connection = (HttpURLConnection) target.openConnection();
                     connection.setRequestMethod(method);
@@ -101,6 +102,16 @@ public class RnHashModule extends ReactContextBaseJavaModule {
         try {
             InputStream inputStream = new ByteArrayInputStream(string.getBytes());
             hash(inputStream, algorithm, callback);
+        } catch (Exception e) {
+            callback.reject(e);
+        }
+    }
+
+    @ReactMethod
+    public void generateHmac(String message, String key, String algorithm, final Promise callback) {
+
+        try {
+            hmac(message,key,algorithm,callback);
         } catch (Exception e) {
             callback.reject(e);
         }

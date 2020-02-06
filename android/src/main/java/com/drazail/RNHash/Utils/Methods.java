@@ -1,28 +1,43 @@
 package com.drazail.RNHash.Utils;
 
+import android.util.Log;
+
 import com.facebook.react.bridge.Promise;
 
 import java.io.InputStream;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import static javax.crypto.Mac.getInstance;
+
 final public class Methods {
+
+    // helpers
+
+    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+
+    private static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = HEX_ARRAY[v >>> 4];
+            hexChars[j * 2 + 1] = HEX_ARRAY[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
+    // main methods
+
     public static void hash(InputStream inputStream, String algorithm, Promise promise) throws Exception {
         try {
-            Map<String, String> algorithms = new HashMap<>();
 
-            algorithms.put("md2", "MD2");
-            algorithms.put("md5", "MD5");
-            algorithms.put("sha1", "SHA-1");
-            algorithms.put("sha224", "SHA-224");
-            algorithms.put("sha256", "SHA-256");
-            algorithms.put("sha384", "SHA-384");
-            algorithms.put("sha512", "SHA-512");
-
-            if (!algorithms.containsKey(algorithm)) throw new Exception("Invalid hash algorithm");
-
-            MessageDigest md = MessageDigest.getInstance(algorithms.get(algorithm));
+            MessageDigest md = MessageDigest.getInstance(algorithm);
 
 
             byte[] buffer = new byte[1024 * 10]; // 10 KB Buffer
@@ -39,6 +54,27 @@ final public class Methods {
             promise.resolve(hexString.toString());
         } catch (Exception ex) {
             throw new Exception(ex);
+        }
+    }
+
+    public static void hmac(String message, String key, String algorithm, Promise promise) {
+        try {
+
+            byte[] keyBytes = key.getBytes();
+            byte[] messageBytes = message.getBytes();
+
+            Mac mac = getInstance(algorithm);
+            mac.init(new SecretKeySpec(keyBytes, algorithm));
+            byte[] finalBytes = mac.doFinal(messageBytes);
+
+            final String messageDigest = bytesToHex(finalBytes);
+
+            Log.i("RNHASH", "message digest: " + messageDigest);
+            promise.resolve(messageDigest);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            promise.reject(e);
         }
     }
 
