@@ -22,11 +22,11 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c1
 
 ### Other Platforms
 
-Native hashing is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soal makes a PR), you can use `JSHash`:
+Native hashing is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soul makes a PR), you can use `JSHash`:
 
 #### algorithm : 
 
-`"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "keccak"`
+`"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "keccak[512]"`
 
 ```javascript
 
@@ -48,6 +48,13 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/f992bd
 #### Hashing files and urls are only supported on android at this point
 
 ### Todo
+
+* SHA-3
+* other Keccak lengths
+* fully implementing HMAC
+
+### Status
+
 |  |iOS |Android|windows|
 |--|----|-------|-------|
 |hash local files|:x:|:heavy_check_mark: |:x:|
@@ -55,6 +62,7 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/f992bd
 |hash network responses|:x:|:heavy_check_mark:|:x:|
 |hash bundle assets|:x:|:x:|:x:|
 |hash strings|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+
 
 
 * all PRs are welcome
