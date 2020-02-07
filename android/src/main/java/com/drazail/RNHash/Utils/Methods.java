@@ -1,16 +1,7 @@
 package com.drazail.RNHash.Utils;
-
-import android.util.Log;
-
 import com.facebook.react.bridge.Promise;
-
 import java.io.InputStream;
-import java.security.InvalidKeyException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -20,7 +11,7 @@ final public class Methods {
 
     // helpers
 
-    private static final char[] HEX_ARRAY = "0123456789ABCDEF".toCharArray();
+    private static final char[] HEX_ARRAY = "0123456789abcdef".toCharArray();
 
     private static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
@@ -31,6 +22,7 @@ final public class Methods {
         }
         return new String(hexChars);
     }
+
 
     // main methods
 
@@ -57,6 +49,7 @@ final public class Methods {
         }
     }
 
+
     public static void hmac(String message, String key, String algorithm, Promise promise) {
         try {
 
@@ -69,7 +62,7 @@ final public class Methods {
 
             final String messageDigest = bytesToHex(finalBytes);
 
-            Log.i("RNHASH", "message digest: " + messageDigest);
+            //Log.i("RNHASH", "message digest: " + messageDigest);
             promise.resolve(messageDigest);
 
         } catch (Exception e) {

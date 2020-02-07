@@ -45,7 +45,8 @@ const App: () => React$Node = () => {
     <>
       <Button
         title="press to hash URL"
-        onPress={() =>
+        onPress={() => {
+          setUrlHash('fetching ...');
           RNHash.hashUrl(
             'https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.doc',
             'GET',
@@ -53,8 +54,8 @@ const App: () => React$Node = () => {
             CONSTSNTS.HashAlgorithms.sha256,
           )
             .then(b => setUrlHash(b))
-            .catch(er => console.log(er))
-        }>
+            .catch(er => console.log(er));
+        }}>
         press to hash URL
       </Button>
       <Text>hash: {urlHash}</Text>

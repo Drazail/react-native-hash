@@ -40,6 +40,7 @@ build/
 .gradle
 local.properties
 *.iml
+test/
 
 # BUCK
 buck-out/
