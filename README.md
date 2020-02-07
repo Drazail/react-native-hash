@@ -8,32 +8,63 @@
 
 ### Android
 
-#### algorithm : 
+#### Algorithm : 
 `"md2" | "md5" | "sha1" | "sha224" | "sha256" | "sha384" | "sha512"`
 
-```javascript
-import RnHash from 'react-native-hash';
+#### HMAC Algorithm : 
 
-RnHash.hashFile(uri: string, algorithm: string).then(hash=>console.log(hash)).catch(e=>console.log(e));
-RnHash.hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>, algorithm: string).then(hash=>console.log(hash)).catch(e=>console.log(e));
-RnHash.hashString(string: string, algorithm: string).then(hash=>console.log(hash)).catch(e=>console.log(e));
+`"HmacMD5" | "HmacSHA1" | "HmacSHA224" | "HmacSHA256" | "HmacSHA384" | "HmacSHA512" | "PBEwithHmacSHA"`
+`"PBEwithHmacSHA1" | "PBEwithHmacSHA224" | "PBEwithHmacSHA256" | "PBEwithHmacSHA384" | "PBEwithHmacSHA512"`
+
+#### Example
+
+```javascript
+import RnHash, { CONSTSNTS } from 'react-native-hash';
+
+RnHash.hashFile(uri: string, CONSTSNTS.HashAlgorithms.sha256: string)
+  .then(hash=>console.log(hash))
+  .catch(e=>console.log(e));
+
+RnHash.hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>,
+CONSTSNTS.HashAlgorithms.sha256: string)
+  .then(hash=>console.log(hash))
+  .catch(e=>console.log(e));
+
+RnHash.hashString(string: string, CONSTSNTS.HashAlgorithms.sha256: string)
+  .then(hash=>console.log(hash))
+  .catch(e=>console.log(e));
+  
+RNHash.generateHmac(
+            message: string,
+            secretKey: string,
+            CONSTSNTS.HmacAlgorithms.HmacSHA512: string,
+          )
+            .then(HMAC => console.log(HMAC))
+            .catch(er => console.log(er))
 ```
+
 check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c12f61d968aa4c647a1c98f06ca31e591381/example/App.js#L47-L54) for more information.
 
 ### Other Platforms
 
 Native hashing is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soul makes a PR), you can use `JSHash`:
 
-#### algorithm : 
+#### Hash Algorithm : 
 
-`"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "keccak[512]"`
+`"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "keccak"`
+
+#### Example :
 
 ```javascript
 
-import { JSHash } from 'react-native-hash';
+import { JSHash, CONSTSNTS } from 'react-native-hash';
 
-JSHash(string: string, algorithm: string).then(hash=>console.log(hash)).catch(e=>console.log(e));
+JSHash(message: string, CONSTSNTS.HashAlgorithms.keccak : string)
+  .then(hash=>console.log(hash))
+  .catch(e=>console.log(e));
 ```
+* keccak implementation defaults to 512 and is not tested against all attack vectors.
+
 check out the [example](https://github.com/Drazail/react-native-hash/blob/f992bdb09b1df5652a3b1590ca6e903a077ad4e6/example/App.js#L88-L90) for more information.
 
 
@@ -62,6 +93,7 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/f992bd
 |hash network responses|:x:|:heavy_check_mark:|:x:|
 |hash bundle assets|:x:|:x:|:x:|
 |hash strings|:heavy_check_mark:|:heavy_check_mark:|:heavy_check_mark:|
+|HMAC|:x:|:heavy_check_mark:|:x:|
 
 
 
