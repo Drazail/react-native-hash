@@ -6,6 +6,25 @@
 
 ## Usage
 
+### Constants
+```
+HashAlgorithms : Record<string, string>;
+```
+```
+HmacAlgorithms : Record<string, string>;
+```
+
+#### Example
+
+```javascript
+import { CONSTSNTS } from from 'react-native-hash';
+
+const hashAlgorithm = CONSTSNTS.HashAlgorithms.sha256;
+
+const hmacAlgorithm = CONSTSNTS.HmacAlgorithms.HmacSHA512;
+
+```
+
 ### Android
 
 #### Hash Algorithm : 
@@ -16,28 +35,42 @@
 `"HmacMD5" | "HmacSHA1" | "HmacSHA224" | "HmacSHA256" | "HmacSHA384" | "HmacSHA512" | "PBEwithHmacSHA"`
 `"PBEwithHmacSHA1" | "PBEwithHmacSHA224" | "PBEwithHmacSHA256" | "PBEwithHmacSHA384" | "PBEwithHmacSHA512"`
 
+#### API
+```
+hashFile(uri: string, algorithm: string):Promise<string>;
+```
+```
+hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>, algorithm: string):Promise<string>;
+```
+```
+hashString(message: string, algorithm: string):Promise<string>;
+```
+```
+generateHmac(message: string, key: string, algorithm: string):Promise<string>;
+```
+
 #### Example
 
 ```javascript
 import RnHash, { CONSTSNTS } from 'react-native-hash';
 
-RnHash.hashFile(uri: string, CONSTSNTS.HashAlgorithms.sha256: string)
+RnHash.hashFile("uri", CONSTSNTS.HashAlgorithms.sha256)
   .then(hash=>console.log(hash))
   .catch(e=>console.log(e));
 
-RnHash.hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>,
-CONSTSNTS.HashAlgorithms.sha256: string)
+RnHash.hashUrl("url", "HTTPMethod", {'Content-type': 'application/json'},
+CONSTSNTS.HashAlgorithms.sha256)
   .then(hash=>console.log(hash))
   .catch(e=>console.log(e));
 
-RnHash.hashString(string: string, CONSTSNTS.HashAlgorithms.sha256: string)
+RnHash.hashString("message", CONSTSNTS.HashAlgorithms.sha256)
   .then(hash=>console.log(hash))
   .catch(e=>console.log(e));
   
 RNHash.generateHmac(
-            message: string,
-            secretKey: string,
-            CONSTSNTS.HmacAlgorithms.HmacSHA512: string,
+            "message",
+            "secretKey",
+            CONSTSNTS.HmacAlgorithms.HmacSHA512,
           )
             .then(HMAC => console.log(HMAC))
             .catch(er => console.log(er))
@@ -53,13 +86,19 @@ Native hashing is only implemented on Android, however, until I get around writi
 
 `"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "keccak"`
 
+#### API:
+
+```
+JSHash(message: string, algorithm: string):Promise<string>;
+```
+
 #### Example :
 
 ```javascript
 
 import { JSHash, CONSTSNTS } from 'react-native-hash';
 
-JSHash(message: string, CONSTSNTS.HashAlgorithms.keccak : string)
+JSHash("message", CONSTSNTS.HashAlgorithms.keccak)
   .then(hash=>console.log(hash))
   .catch(e=>console.log(e));
 ```
