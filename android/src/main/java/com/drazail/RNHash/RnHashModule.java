@@ -9,7 +9,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
-import com.facebook.react.bridge.WritableNativeArray;
+import com.facebook.react.bridge.WritableNativeMap;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -18,7 +18,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.drazail.RNHash.Utils.Methods.hash;
 import static com.drazail.RNHash.Utils.Methods.hmac;
@@ -38,7 +39,8 @@ public class RnHashModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void hashFilesForFolder(String uri, String algorithm, final Promise callback) {
+    public void hashFilesForFolder(
+            String uri, String algorithm, int minFileSize, int maxFileSize, String extensionFilter, final Promise callback) {
 
         try {
             ToRunnable runnable = new ToRunnable(() -> {
@@ -47,13 +49,15 @@ public class RnHashModule extends ReactContextBaseJavaModule {
                     File file = new File(uri);
 
                     if (file.isDirectory()) {
-                        WritableNativeArray hashArray = new WritableNativeArray();
-                        Set<String> filesPaths = FS.listFilesForFolder(new File(uri));
+                        WritableNativeMap hashMap = new WritableNativeMap();
+                        List<String> filesPaths = new ArrayList<>();
+                        filesPaths = FS.listFilesForFolder(
+                                new File(uri), minFileSize, maxFileSize, extensionFilter, filesPaths);
                         for (String s : filesPaths) {
                             FileInputStream inputStream = new FileInputStream(s);
-                            hashArray.pushString(hash(inputStream, algorithm));
+                            hashMap.putString(s, hash(inputStream, algorithm));
                         }
-                        callback.resolve(hashArray);
+                        callback.resolve(hashMap);
                     }
 
                     if (!file.exists()) {

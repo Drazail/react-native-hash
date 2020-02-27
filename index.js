@@ -7,4 +7,4 @@ const { RNHash } = NativeModules;
 
 export default RNHash;
 export { default as JSHash } from './JSHash/JSHash.js';
-export { default as CONSTSNTS } from './Constants.js';
+export { default as CONSTANTS } from './Constants.js';

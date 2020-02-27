@@ -1,20 +1,25 @@
 package com.drazail.RNHash.Utils;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class FS {
 
-    public static Set<String> listFilesForFolder(File folder){
-        Set<String> pathSet = new HashSet<>();
+    public static List<String> listFilesForFolder(File folder, int minFileSize, int maxFileSize, String extensionFilter, List<String> list) {
+
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
-                listFilesForFolder(fileEntry);
+                listFilesForFolder(fileEntry, minFileSize, maxFileSize, extensionFilter, list);
             } else {
-                pathSet.add(fileEntry.getAbsolutePath());
+
+                long fileSize = fileEntry.length();
+                if (
+                        fileSize < maxFileSize && fileSize > minFileSize &&
+                                fileEntry.toString().toLowerCase().endsWith(extensionFilter)
+                )
+                    list.add(fileEntry.getAbsolutePath());
             }
         }
-        return pathSet;
+        return list;
     }
 }
