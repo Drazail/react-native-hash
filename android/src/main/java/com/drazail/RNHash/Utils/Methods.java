@@ -1,7 +1,10 @@
 package com.drazail.RNHash.Utils;
-import com.facebook.react.bridge.Promise;
+
 import java.io.InputStream;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -26,49 +29,41 @@ final public class Methods {
 
     // main methods
 
-    public static void hash(InputStream inputStream, String algorithm, Promise promise) throws Exception {
-        try {
+    public static String hash(InputStream inputStream, String algorithm) throws Exception {
 
-            MessageDigest md = MessageDigest.getInstance(algorithm);
+        MessageDigest md = MessageDigest.getInstance(algorithm);
 
+        byte[] buffer = new byte[1024 * 10]; // 10 KB Buffer
 
-            byte[] buffer = new byte[1024 * 10]; // 10 KB Buffer
-
-            int read;
-            while ((read = inputStream.read(buffer)) != -1) {
-                md.update(buffer, 0, read);
-            }
-
-            StringBuilder hexString = new StringBuilder();
-            for (byte digestByte : md.digest())
-                hexString.append(String.format("%02x", digestByte));
-
-            promise.resolve(hexString.toString());
-        } catch (Exception ex) {
-            throw new Exception(ex);
+        int read;
+        while ((read = inputStream.read(buffer)) != -1) {
+            md.update(buffer, 0, read);
         }
+
+        StringBuilder hexString = new StringBuilder();
+        for (byte digestByte : md.digest())
+            hexString.append(String.format("%02x", digestByte));
+
+        return (hexString.toString());
     }
 
 
-    public static void hmac(String message, String key, String algorithm, Promise promise) {
-        try {
+    public static String hmac(String message, String key, String algorithm) throws NoSuchAlgorithmException, InvalidKeyException {
 
-            byte[] keyBytes = key.getBytes();
-            byte[] messageBytes = message.getBytes();
 
-            Mac mac = getInstance(algorithm);
-            mac.init(new SecretKeySpec(keyBytes, algorithm));
-            byte[] finalBytes = mac.doFinal(messageBytes);
+        byte[] keyBytes = key.getBytes();
+        byte[] messageBytes = message.getBytes();
 
-            final String messageDigest = bytesToHex(finalBytes);
+        Mac mac = getInstance(algorithm);
+        mac.init(new SecretKeySpec(keyBytes, algorithm));
+        byte[] finalBytes = mac.doFinal(messageBytes);
 
-            //Log.i("RNHASH", "message digest: " + messageDigest);
-            promise.resolve(messageDigest);
+        final String messageDigest = bytesToHex(finalBytes);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            promise.reject(e);
-        }
+        //Log.i("RNHASH", "message digest: " + messageDigest);
+        return (messageDigest);
+
+
     }
 
 }

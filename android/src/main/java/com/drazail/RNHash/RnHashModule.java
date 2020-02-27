@@ -1,6 +1,7 @@
 package com.drazail.RNHash;
 
 import com.drazail.RNHash.C.errorMessages;
+import com.drazail.RNHash.Utils.FS;
 import com.drazail.RNHash.Utils.ToRunnable;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -8,6 +9,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
+import com.facebook.react.bridge.WritableNativeArray;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -16,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Set;
 
 import static com.drazail.RNHash.Utils.Methods.hash;
 import static com.drazail.RNHash.Utils.Methods.hmac;
@@ -35,6 +38,48 @@ public class RnHashModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void hashFilesForFolder(String uri, String algorithm, final Promise callback) {
+
+        try {
+            ToRunnable runnable = new ToRunnable(() -> {
+                try {
+
+                    File file = new File(uri);
+
+                    if (file.isDirectory()) {
+                        WritableNativeArray hashArray = new WritableNativeArray();
+                        Set<String> filesPaths = FS.listFilesForFolder(new File(uri));
+                        for (String s : filesPaths) {
+                            FileInputStream inputStream = new FileInputStream(s);
+                            hashArray.pushString(hash(inputStream, algorithm));
+                        }
+                        callback.resolve(hashArray);
+                    }
+
+                    if (!file.exists()) {
+                        String message = C.errorMessages.FileNotFound.name();
+                        callback.reject(new FileNotFoundException());
+                    }
+
+                    if (file.exists() && !file.isDirectory()) {
+                        FileInputStream inputStream = new FileInputStream(uri);
+                        callback.resolve(hash(inputStream, algorithm));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    callback.reject(e);
+                }
+            });
+
+            runnable.run();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            callback.reject(e);
+        }
+    }
+
+    @ReactMethod
     public void hashFile(String uri, String algorithm, final Promise callback) {
 
         try {
@@ -51,7 +96,7 @@ public class RnHashModule extends ReactContextBaseJavaModule {
             }
             FileInputStream inputStream = new FileInputStream(uri);
 
-            hash(inputStream, algorithm, callback);
+            callback.resolve(hash(inputStream, algorithm));
         } catch (FileNotFoundException e) {
             String message = e.getMessage();
 
@@ -61,6 +106,7 @@ public class RnHashModule extends ReactContextBaseJavaModule {
                 rejectFileNotFound(callback, uri);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             callback.reject(e);
         }
     }
@@ -85,13 +131,14 @@ public class RnHashModule extends ReactContextBaseJavaModule {
                     }
 
                     InputStream inputStream = connection.getInputStream();
-                    hash(inputStream, algorithm, callback);
+                    callback.resolve(hash(inputStream, algorithm));
                 } catch (Exception e) {
                     callback.reject(e);
                 }
             });
             runnable.run();
         } catch (Exception e) {
+            e.printStackTrace();
             callback.reject(e);
         }
     }
@@ -101,8 +148,9 @@ public class RnHashModule extends ReactContextBaseJavaModule {
 
         try {
             InputStream inputStream = new ByteArrayInputStream(string.getBytes());
-            hash(inputStream, algorithm, callback);
+            callback.resolve(hash(inputStream, algorithm));
         } catch (Exception e) {
+            e.printStackTrace();
             callback.reject(e);
         }
     }
@@ -111,8 +159,9 @@ public class RnHashModule extends ReactContextBaseJavaModule {
     public void generateHmac(String message, String key, String algorithm, final Promise callback) {
 
         try {
-            hmac(message,key,algorithm,callback);
+            callback.resolve(hmac(message, key, algorithm));
         } catch (Exception e) {
+            e.printStackTrace();
             callback.reject(e);
         }
     }

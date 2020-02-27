@@ -125,66 +125,6 @@ public class C {
 
         };
 
-        this.result = new String[]{"0"};
-
-        this.promise = new Promise() {
-
-            @Override
-            public void resolve(@Nullable Object value) {
-                result[0] = (String) value;
-            }
-
-            @Override
-            public void reject(String code, String message) {
-
-            }
-
-            @Override
-            public void reject(String code, Throwable throwable) {
-
-            }
-
-            @Override
-            public void reject(String code, String message, Throwable throwable) {
-
-            }
-
-            @Override
-            public void reject(Throwable throwable) {
-
-            }
-
-            @Override
-            public void reject(Throwable throwable, WritableMap userInfo) {
-
-            }
-
-            @Override
-            public void reject(String code, @NonNull WritableMap userInfo) {
-
-            }
-
-            @Override
-            public void reject(String code, Throwable throwable, WritableMap userInfo) {
-
-            }
-
-            @Override
-            public void reject(String code, String message, @NonNull WritableMap userInfo) {
-
-            }
-
-            @Override
-            public void reject(String code, String message, Throwable throwable, WritableMap userInfo) {
-
-            }
-
-            @Override
-            public void reject(String message) {
-
-            }
-
-        };
 
     }
 
@@ -198,10 +138,6 @@ public class C {
 
     public HashMap<String, String> getHashAlgorithms() {
         return hashAlgorithms;
-    }
-
-    public String[] getResult() {
-        return result;
     }
 
     public String[] getInputArray() {
@@ -256,7 +192,4 @@ public class C {
         return expectedMD5Map;
     }
 
-    public Promise getPromise() {
-        return promise;
-    }
 }

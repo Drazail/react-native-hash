@@ -9,6 +9,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import static com.drazail.RNHash.Utils.Methods.hash;
@@ -23,7 +25,6 @@ class UtilsTest {
     private String[] messages = constants.getInputArray();
     private HashMap<String,String> hashAlgorithms = constants.getHashAlgorithms();
     private HashMap<String,String> HmacAlgorithms = constants.getHmacAlgorithms();
-    private Promise promise = constants.getPromise();
 
 
     private Method aGgetter(String methodName) {
@@ -41,7 +42,14 @@ class UtilsTest {
             HmacAlgorithms.forEach((k,v)->{
                 int n = 0;
                 for (String message : messages) {
-                    hmac(message, key, v, promise);
+                    String actual = null;
+                    try {
+                        actual = hmac(message, key, v);
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (InvalidKeyException e) {
+                        e.printStackTrace();
+                    }
                     Method getter = aGgetter("getExpected" + k + "Map");
                     assert getter != null;
                     String[] expected = new String[0];
@@ -52,7 +60,7 @@ class UtilsTest {
                     } catch (InvocationTargetException e) {
                         fail(e);
                     }
-                    Assertions.assertEquals(constants.getResult()[0], expected[n]);
+                    Assertions.assertEquals(actual, expected[n]);
                     n ++;
                 }
             });
@@ -66,8 +74,9 @@ class UtilsTest {
                 int n = 0;
                 for (String message : messages) {
                     InputStream inputStream = new ByteArrayInputStream(message.getBytes());
+                    String actual = null;
                     try {
-                        hash(inputStream, v, promise);
+                        actual = hash(inputStream, v);
                     } catch (Exception e) {
                         fail(e);
                     }
@@ -81,7 +90,7 @@ class UtilsTest {
                     } catch (InvocationTargetException e) {
                         fail(e);
                     }
-                    Assertions.assertEquals(constants.getResult()[0], expected[n]);
+                    Assertions.assertEquals(actual, expected[n]);
                     n++;
                 }
             });

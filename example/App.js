@@ -9,7 +9,7 @@
 import React, {useState} from 'react';
 import {Text, PermissionsAndroid, Button} from 'react-native';
 
-import RNHash, {JSHash, CONSTSNTS} from 'react-native-hash';
+import RNHash, {JSHash, CONSTANTS} from 'react-native-hash';
 
 async function requestPermission() {
   try {
@@ -41,6 +41,7 @@ const App: () => React$Node = () => {
   const [stringlHash, setStringHash] = useState('NA');
   const [jsStringlHash, setJsStringHash] = useState('NA');
   const [HMACString, setHMACString] = useState('NA');
+  const [folderString, setFolderString] = useState('NA');
   return (
     <>
       <Button
@@ -51,7 +52,7 @@ const App: () => React$Node = () => {
             'https://file-examples.com/wp-content/uploads/2017/02/file-sample_100kB.doc',
             'GET',
             {'Content-type': 'application/json'},
-            CONSTSNTS.HashAlgorithms.sha256,
+            CONSTANTS.HashAlgorithms.sha256,
           )
             .then(b => setUrlHash(b))
             .catch(er => console.log(er));
@@ -64,7 +65,7 @@ const App: () => React$Node = () => {
         onPress={() =>
           RNHash.hashFile(
             '//storage/emulated/0/Download/k.mp3',
-            CONSTSNTS.HashAlgorithms.sha256,
+            CONSTANTS.HashAlgorithms.sha256,
           )
             .then(b => setFileHash(b))
             .catch(er => console.log(er))
@@ -74,11 +75,28 @@ const App: () => React$Node = () => {
       <Text>hash: {fileHash}</Text>
 
       <Button
+        title="press to hash Folder"
+        onPress={() =>
+          RNHash.hashFilesForFolder(
+            '//storage/emulated/0',
+            CONSTANTS.HashAlgorithms.sha256,
+            0,
+            1048576,
+            '',
+          )
+            .then(b => setFolderString(JSON.stringify(b)))
+            .catch(er => console.log(er))
+        }>
+        press to hash File
+      </Button>
+      <Text>hash: {folderString}</Text>
+
+      <Button
         title="press to hash String"
         onPress={() =>
           RNHash.hashString(
             'The quick brown fox jumps over the lazy dog',
-            CONSTSNTS.HashAlgorithms.sha256,
+            CONSTANTS.HashAlgorithms.sha256,
           )
             .then(b => setStringHash(b))
             .catch(er => console.log(er))
@@ -92,7 +110,7 @@ const App: () => React$Node = () => {
         onPress={() =>
           JSHash(
             'The quick brown fox jumps over the lazy dog',
-            CONSTSNTS.HashAlgorithms.keccak,
+            CONSTANTS.HashAlgorithms.keccak,
           )
             .then(b => setJsStringHash(b))
             .catch(er => console.log(er))
@@ -107,14 +125,14 @@ const App: () => React$Node = () => {
           RNHash.generateHmac(
             'The quick brown fox jumps over the lazy dog',
             'SecretKey',
-            CONSTSNTS.HmacAlgorithms.HmacSHA512,
+            CONSTANTS.HmacAlgorithms.HmacSHA512,
           )
             .then(b => setHMACString(b))
             .catch(er => console.log(er))
         }>
         press to hash String
       </Button>
-      <Text>hash: {HMACString}</Text>
+      <Text>hmac: {HMACString}</Text>
     </>
   );
 };
