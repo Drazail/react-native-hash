@@ -5,6 +5,5 @@ public final class C {
     }
 
     public enum errorMessages {isDirectory, FileNotFound}
-
-    ;
+    public static String eventName = "RNHashBatch";
 }

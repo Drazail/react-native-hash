@@ -6,8 +6,8 @@
  * @flow
  */
 
-import React, {useState} from 'react';
-import {Text, PermissionsAndroid, Button} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {Text, PermissionsAndroid, Button, DeviceEventEmitter} from 'react-native';
 
 import RNHash, {JSHash, CONSTANTS} from 'react-native-hash';
 
@@ -42,6 +42,12 @@ const App: () => React$Node = () => {
   const [jsStringlHash, setJsStringHash] = useState('NA');
   const [HMACString, setHMACString] = useState('NA');
   const [folderString, setFolderString] = useState('NA');
+  const [eventsString, setEventsString] = useState('NA');
+
+  useEffect(()=>{
+    DeviceEventEmitter.addListener(CONSTANTS.Events.onBatchReccieved,(data)=>setEventsString(JSON.stringify(data)))
+  },[])
+
   return (
     <>
       <Button
@@ -81,15 +87,34 @@ const App: () => React$Node = () => {
             '//storage/emulated/0',
             CONSTANTS.HashAlgorithms.sha256,
             0,
-            1048576,
+            104857,
             '',
+            -1
           )
             .then(b => setFolderString(JSON.stringify(b)))
             .catch(er => console.log(er))
         }>
-        press to hash File
+        press to hash Folder
       </Button>
       <Text>hash: {folderString}</Text>
+
+      <Button
+        title="press to hash Folder with events"
+        onPress={() =>
+          RNHash.hashFilesForFolder(
+            '//storage/emulated/0',
+            CONSTANTS.HashAlgorithms.sha256,
+            0,
+            104857,
+            '',
+            3
+          )
+            .then(b => setFolderString(JSON.stringify(b)))
+            .catch(er => console.log(er))
+        }>
+        press to hash Folder with events
+      </Button>
+      <Text>hash: {eventsString}</Text>
 
       <Button
         title="press to hash String"

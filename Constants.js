@@ -26,6 +26,10 @@ const CONSTANTS = {
     PBEwithHmacSHA384: 'PBEwithHmacSHA384',
     PBEwithHmacSHA512: 'PBEwithHmacSHA512',
   },
+
+  Events: {
+    onBatchReccieved: 'RNHashBatch',
+  },
 };
 
 export default CONSTANTS;

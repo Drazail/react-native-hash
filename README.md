@@ -19,7 +19,7 @@ HmacAlgorithms : Record<string, string>;
 #### Example
 
 ```javascript
-import { CONSTANTS } from from 'react-native-hash';
+import { CONSTANTS } from 'react-native-hash';
 
 const hashAlgorithm = CONSTANTS.HashAlgorithms.sha256;
 
@@ -47,6 +47,9 @@ hashFile(uri: string, algorithm: string):Promise<string>;
 ```
 hashFilesForFolder(uri: string, algorithm: string, minFileSize: number, maxFileSize: number, extensionFilter: string ): Promise<record<string, string>>;
 ```
+
+* pass an empty string `""` to the hashFilesForFolder as extensionFilter if you dont want to filter the results.
+
 
 ```
 hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>, algorithm: string):Promise<string>;
