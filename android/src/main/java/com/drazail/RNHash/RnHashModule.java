@@ -41,7 +41,7 @@ public class RnHashModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void hashFilesForFolder(
-            String uri, String algorithm, int minFileSize, int maxFileSize, String extensionFilter, int batchSize, final Promise callback) {
+            String uri, String algorithm, int minFileSize, int maxFileSize, String extensionFilter, int batchSize, int delay, final Promise callback) {
 
         try {
             ToRunnable runnable = new ToRunnable(() -> {
@@ -59,7 +59,9 @@ public class RnHashModule extends ReactContextBaseJavaModule {
                                 new File(uri), minFileSize, maxFileSize, extensionFilter, filesPaths);
                         totalFiles = filesPaths.size();
                         for (String s : filesPaths) {
+
                             if (batchSize != -1 && batchedFiles >= batchSize) {
+                                Thread.sleep(delay);
                                 WritableNativeMap batch = new WritableNativeMap();
                                 batch.putInt("FilesCount", totalFiles);
                                 batch.putBoolean("isFinalBatch", false);
@@ -75,6 +77,7 @@ public class RnHashModule extends ReactContextBaseJavaModule {
                             batchedFiles += 1;
                         }
                         if (batchSize != -1) {
+                            Thread.sleep(delay);
                             WritableNativeMap finalBatch = new WritableNativeMap();
                             finalBatch.putInt("FilesCount", totalFiles);
                             finalBatch.putBoolean("isFinalBatch", true);

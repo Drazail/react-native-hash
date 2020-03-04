@@ -89,7 +89,8 @@ const App: () => React$Node = () => {
             0,
             104857,
             '',
-            -1
+            -1,
+            0
           )
             .then(b => setFolderString(JSON.stringify(b)))
             .catch(er => console.log(er))
@@ -107,7 +108,8 @@ const App: () => React$Node = () => {
             0,
             104857,
             '',
-            3
+            2,
+            1000
           )
             .then(b => setFolderString(JSON.stringify(b)))
             .catch(er => console.log(er))

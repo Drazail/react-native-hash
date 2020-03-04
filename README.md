@@ -25,6 +25,8 @@ const hashAlgorithm = CONSTANTS.HashAlgorithms.sha256;
 
 const hmacAlgorithm = CONSTANTS.HmacAlgorithms.HmacSHA512;
 
+const EventName = CONSTANTS.Events.onBatchReccieved;
+
 ```
 
 ### Android
@@ -45,11 +47,14 @@ hashFile(uri: string, algorithm: string):Promise<string>;
 ```
 
 ```
-hashFilesForFolder(uri: string, algorithm: string, minFileSize: number, maxFileSize: number, extensionFilter: string ): Promise<record<string, string>>;
+hashFilesForFolder(uri: string, algorithm: string, minFileSize: number, maxFileSize: number, extensionFilter: string, batchSize: number, delay: number ):  Promise<{FilesCount:number, isFinalBatch: bool, batchNumber: number, results: Record<string, string>}>;
 ```
 
 * pass an empty string `""` to the hashFilesForFolder as extensionFilter if you dont want to filter the results.
-
+* if you pass -1 as batchSize, the function will return a promise which resolves into an object with all hashes
+* if you pass any number other than -1 to batchSize, instead of returning the results, null will be returned, but when each batch is ready an event will be fired.
+* the delay parameter determines how many ms should the native thread waits before sending the next batch.
+* check `"press to hash Folder with events"` and `"press to hash Folder"` in the example app for more details
 
 ```
 hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>, algorithm: string):Promise<string>;
