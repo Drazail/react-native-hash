@@ -102,14 +102,14 @@ const App: () => React$Node = () => {
       <Button
         title="press to hash Folder with events"
         onPress={() =>
-          RNHash.hashFilesForFolder(
-            '//storage/emulated/0',
+          RNHash.hashFilesForFolders(
+            ['//storage/emulated/0/Music', "//storage/emulated/0/Download"],
             CONSTANTS.HashAlgorithms.sha256,
             0,
-            104857,
+            10485700,
             '',
             2,
-            1000
+            100
           )
             .then(b => setFolderString(JSON.stringify(b)))
             .catch(er => console.log(er))

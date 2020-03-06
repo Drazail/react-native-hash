@@ -8,6 +8,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.WritableNativeMap;
@@ -125,6 +126,98 @@ public class RnHashModule extends ReactContextBaseJavaModule {
             e.printStackTrace();
             callback.reject(e);
         }
+    }
+
+    @ReactMethod
+    public void hashFilesForFolders(
+            ReadableArray uris, String algorithm, int minFileSize, int maxFileSize, String extensionFilter, int batchSize, int delay, final Promise callback) {
+
+        for(int i = 0; i < uris.size(); i++){
+            try {
+                String uri = uris.getString(i);
+                ToRunnable runnable = new ToRunnable(() -> {
+                    try {
+
+                        File file = new File(uri);
+
+                        if (file.isDirectory()) {
+                            WritableNativeMap hashMap = new WritableNativeMap();
+                            List<String> filesPaths = new ArrayList<>();
+                            int batchNumber = 0;
+                            int totalFiles;
+                            int batchedFiles = 0;
+                            filesPaths = FS.listFilesForFolder(
+                                    new File(uri), minFileSize, maxFileSize, extensionFilter, filesPaths);
+                            totalFiles = filesPaths.size();
+                            for (String s : filesPaths) {
+
+                                if (batchSize != -1 && batchedFiles >= batchSize) {
+                                    Thread.sleep(delay);
+                                    WritableNativeMap batch = new WritableNativeMap();
+                                    batch.putInt("FilesCount", totalFiles);
+                                    batch.putBoolean("isFinalBatch", false);
+                                    batch.putInt("batchNumber", batchNumber);
+                                    batch.putMap("results", hashMap);
+                                    EventEmitter.emit(RnHashModule.super.getReactApplicationContext(), C.eventName, batch);
+                                    batchedFiles = 0;
+                                    batchNumber += 1;
+                                    hashMap = new WritableNativeMap();
+                                }
+                                FileInputStream inputStream = new FileInputStream(s);
+                                hashMap.putString(s, hash(inputStream, algorithm));
+                                batchedFiles += 1;
+                            }
+                            if (batchSize != -1) {
+                                Thread.sleep(delay);
+                                WritableNativeMap finalBatch = new WritableNativeMap();
+                                finalBatch.putInt("FilesCount", totalFiles);
+                                finalBatch.putBoolean("isFinalBatch", true);
+                                finalBatch.putInt("batchNumber", batchNumber);
+                                finalBatch.putMap("results", hashMap);
+                                EventEmitter.emit(RnHashModule.super.getReactApplicationContext(), C.eventName, finalBatch);
+                                callback.resolve(null);
+                            }else{
+                                WritableNativeMap batch = new WritableNativeMap();
+                                batch.putInt("FilesCount", totalFiles);
+                                batch.putBoolean("isFinalBatch", true);
+                                batch.putInt("batchNumber", 0);
+                                batch.putMap("results", hashMap);
+                                callback.resolve(batch);
+                            }
+
+                        }
+
+                        if (!file.exists()) {
+                            String message = C.errorMessages.FileNotFound.name();
+                            rejectFileNotFound(callback,message);
+                        }
+
+                        if (file.exists() && !file.isDirectory()) {
+                            FileInputStream inputStream = new FileInputStream(uri);
+                            String hash = hash(inputStream, algorithm);
+                            WritableNativeMap hashMap =  new WritableNativeMap();
+                            hashMap.putString("results", hash);
+                            WritableNativeMap batch = new WritableNativeMap();
+                            batch.putInt("FilesCount", 1);
+                            batch.putBoolean("isFinalBatch", true);
+                            batch.putInt("batchNumber", 0);
+                            batch.putMap("results", hashMap);
+                            callback.resolve(batch);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        callback.reject(e);
+                    }
+                });
+
+                runnable.run();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                callback.reject(e);
+            }
+        }
+
     }
 
     @ReactMethod
