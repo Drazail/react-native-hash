@@ -15,7 +15,13 @@ export function hashFile(uri: string, algorithm: string): Promise<string>;
  */
 export function hashFilesForFolder(
     uri: string, algorithm: string, minFileSize: number, maxFileSize: number, extensionFilter: string, batchSize: number, delay: number
-): Promise<{FilesCount:number, isFinalBatch: bool, batchNumber: number, results: Record<string, string>}>;
+): Promise<{ FilesCount: number, isFinalBatch: bool, batchNumber: number, results: Record<string, string> }>;
+
+export function hashFilesForFolders(
+    uri: Array<string>, algorithm: string, minFileSize: number, maxFileSize: number, extensionFilter: string, batchSize: number, delay: number
+): Promise<{ FilesCount: number, isFinalBatch: bool, batchNumber: number, results: Record<string, string> }>;
+
+
 export function hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>, algorithm: string): Promise<string>;
 export function hashString(message: string, algorithm: string): Promise<string>;
 export function generateHmac(message: string, key: string, algorithm: string): Promise<string>;

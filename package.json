@@ -1,7 +1,7 @@
 {
   "name": "react-native-hash",
   "title": "React Native Hash",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A hashing library for react-native",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,10 @@
     "SHA-256",
     "SHA-384",
     "SHA-512",
-    "android"
+    "android",
+    "keccak",
+    "hash-algorithm",
+    "hmac"
   ],
   "author": {
     "name": "Drazail",

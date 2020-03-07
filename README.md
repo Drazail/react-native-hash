@@ -16,6 +16,10 @@ HashAlgorithms : Record<string, string>;
 HmacAlgorithms : Record<string, string>;
 ```
 
+```
+Events : Record<string, string>;
+```
+
 #### Example
 
 ```javascript
@@ -57,6 +61,12 @@ hashFilesForFolder(uri: string, algorithm: string, minFileSize: number, maxFileS
 * check `"press to hash Folder with events"` and `"press to hash Folder"` in the example app for more details
 
 ```
+hashFilesForFolders(uri: string, algorithm: string, minFileSize: number, maxFileSize: number, extensionFilter: string, batchSize: number, delay: number ):  Promise<{FilesCount:number, isFinalBatch: bool, batchNumber: number, results: Record<string, string>}>;
+```
+
+* behaves the same as the `hashFilesForFolder`, but reccieves an String array as first argument.
+
+```
 hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>, algorithm: string):Promise<string>;
 ```
 
@@ -77,12 +87,26 @@ RnHash.hashFile("uri", CONSTANTS.HashAlgorithms.sha256)
   .then(hash => console.log(hash))
   .catch(e => console.log(e));
 
-RNHash.hashFilesForFolder(
+RNHash.hashFilesForFolders(
+  ["uri", "anotherUri"],
+  CONSTANTS.HashAlgorithms.sha256,
+  0,
+  1048576,
+  ".mp3",
+  -1,
+  0
+)
+  .then(b => setFolderString(JSON.stringify(b)))
+  .catch(er => console.log(er));
+
+  RNHash.hashFilesForFolder(
   "uri",
   CONSTANTS.HashAlgorithms.sha256,
   0,
   1048576,
-  ".mp3"
+  ".mp3",
+  -1,
+  0
 )
   .then(b => setFolderString(JSON.stringify(b)))
   .catch(er => console.log(er));
