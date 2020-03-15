@@ -7,7 +7,12 @@
  */
 
 import React, {useState, useEffect} from 'react';
-import {Text, PermissionsAndroid, Button, DeviceEventEmitter} from 'react-native';
+import {
+  Text,
+  PermissionsAndroid,
+  Button,
+  DeviceEventEmitter,
+} from 'react-native';
 
 import RNHash, {JSHash, CONSTANTS} from 'react-native-hash';
 
@@ -44,9 +49,12 @@ const App: () => React$Node = () => {
   const [folderString, setFolderString] = useState('NA');
   const [eventsString, setEventsString] = useState('NA');
 
-  useEffect(()=>{
-    DeviceEventEmitter.addListener(CONSTANTS.Events.onBatchReccieved,(data)=>setEventsString(JSON.stringify(data)))
-  },[])
+  useEffect(() => {
+    DeviceEventEmitter.addListener(CONSTANTS.Events.onBatchReccieved, data => {
+      console.log(Object.keys(data.results).length);
+      setEventsString(JSON.stringify(data));
+    });
+  }, []);
 
   return (
     <>
@@ -90,7 +98,7 @@ const App: () => React$Node = () => {
             104857,
             '',
             -1,
-            0
+            0,
           )
             .then(b => setFolderString(JSON.stringify(b)))
             .catch(er => console.log(er))
@@ -103,15 +111,17 @@ const App: () => React$Node = () => {
         title="press to hash Folder with events"
         onPress={() =>
           RNHash.hashFilesForFolders(
-            ['//storage/emulated/0/Music', "//storage/emulated/0/Download"],
+            ['//storage/emulated/0/Music', '//storage/emulated/0/Download'],
             CONSTANTS.HashAlgorithms.sha256,
             0,
             10485700,
             '',
-            2,
-            100
+            10,
+            1000,
           )
-            .then(b => setFolderString(JSON.stringify(b)))
+            .then(b => {
+              setFolderString(JSON.stringify(b));
+            })
             .catch(er => console.log(er))
         }>
         press to hash Folder with events
