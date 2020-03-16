@@ -1,7 +1,7 @@
 {
   "name": "react-native-hash",
   "title": "React Native Hash",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A hashing library for react-native",
   "main": "index.js",
   "scripts": {
