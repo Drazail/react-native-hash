@@ -135,22 +135,32 @@ public class RnHashModule extends ReactContextBaseJavaModule {
             ReadableArray uris, String algorithm, int minFileSize, int maxFileSize, String extensionFilter, int batchSize, int delay, final Promise callback) {
 
         ToRunnable runnable = new ToRunnable(() -> {
-            List<String> filesPaths = new ArrayList<>();
-            int totalFiles = 0;
-            int batchNumber = 0;
-            int batchedFiles = 0;
-            WritableNativeMap hashMap = new WritableNativeMap();
+            try {
+                List<String> filesPaths = new ArrayList<>();
+                int totalFiles = 0;
+                int batchNumber = 0;
+                int batchedFiles = 0;
+                WritableNativeMap hashMap = new WritableNativeMap();
 
-            for (int i = 0; i < uris.size(); i++) {
-                String uri = uris.getString(i);
-                filesPaths.addAll(FS.listFilesForFolder(
-                        new File(uri), minFileSize, maxFileSize, extensionFilter, filesPaths));
-            }
+                for (int i = 0; i < uris.size(); i++) {
+                    String uri = uris.getString(i);
+                    filesPaths.addAll(FS.listFilesForFolder(
+                            new File(uri), minFileSize, maxFileSize, extensionFilter, filesPaths));
+                }
 
-            totalFiles = filesPaths.size();
-            for (int i = 0; i < totalFiles; i++) {
+                totalFiles = filesPaths.size();
+                if (batchSize != -1 && totalFiles == 0) {
+                    WritableNativeMap finalBatch = new WritableNativeMap();
+                    finalBatch.putInt("FilesCount", totalFiles);
+                    finalBatch.putBoolean("isFinalBatch", true);
+                    finalBatch.putInt("batchNumber", batchNumber);
+                    finalBatch.putMap("results", hashMap);
+                    EventEmitter.emit(RnHashModule.super.getReactApplicationContext(), C.eventName, finalBatch);
+                    callback.resolve(null);
+                    return;
+                }
+                for (int i = 0; i < totalFiles; i++) {
 
-                try {
 
                     String uri = filesPaths.get(i);
                     FileInputStream inputStream = new FileInputStream(uri);
@@ -192,10 +202,10 @@ public class RnHashModule extends ReactContextBaseJavaModule {
                     }
 
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    callback.reject(e);
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                callback.reject(e);
             }
         });
 
