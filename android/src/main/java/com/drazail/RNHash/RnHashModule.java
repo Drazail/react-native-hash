@@ -1,5 +1,7 @@
 package com.drazail.RNHash;
 
+import androidx.annotation.NonNull;
+
 import com.drazail.RNHash.C.errorMessages;
 import com.drazail.RNHash.Utils.EventEmitter;
 import com.drazail.RNHash.Utils.FS;
@@ -35,6 +37,7 @@ public class RnHashModule extends ReactContextBaseJavaModule {
         super(reactContext);
     }
 
+    @NonNull
     @Override
     public String getName() {
         return "RNHash";
@@ -56,7 +59,7 @@ public class RnHashModule extends ReactContextBaseJavaModule {
                         int batchNumber = 0;
                         int totalFiles;
                         int batchedFiles = 0;
-                        filesPaths = FS.listFilesForFolder(
+                        FS.listFilesForFolder(
                                 new File(uri), minFileSize, maxFileSize, extensionFilter, filesPaths);
                         totalFiles = filesPaths.size();
                         for (String s : filesPaths) {
@@ -137,15 +140,15 @@ public class RnHashModule extends ReactContextBaseJavaModule {
         ToRunnable runnable = new ToRunnable(() -> {
             try {
                 List<String> filesPaths = new ArrayList<>();
-                int totalFiles = 0;
+                int totalFiles;
                 int batchNumber = 0;
                 int batchedFiles = 0;
                 WritableNativeMap hashMap = new WritableNativeMap();
 
                 for (int i = 0; i < uris.size(); i++) {
                     String uri = uris.getString(i);
-                    filesPaths.addAll(FS.listFilesForFolder(
-                            new File(uri), minFileSize, maxFileSize, extensionFilter, filesPaths));
+                    FS.listFilesForFolder(
+                            new File(uri), minFileSize, maxFileSize, extensionFilter, filesPaths);
                 }
 
                 totalFiles = filesPaths.size();

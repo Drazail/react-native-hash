@@ -92,11 +92,11 @@ const App: () => React$Node = () => {
         title="press to hash Folder"
         onPress={() =>
           RNHash.hashFilesForFolder(
-            '//storage/emulated/0',
+            '//storage/emulated/0/Music',
             CONSTANTS.HashAlgorithms.sha256,
             0,
-            104857,
-            '',
+            104857000,
+            '.mp3',
             -1,
             0,
           )
@@ -114,9 +114,9 @@ const App: () => React$Node = () => {
             ['//storage/emulated/0/Music', '//storage/emulated/0/Download'],
             CONSTANTS.HashAlgorithms.sha256,
             0,
-            10485700,
-            '',
-            10,
+            104857000,
+            '.mp3',
+            3,
             1000,
           )
             .then(b => {

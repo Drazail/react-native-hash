@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FS {
 
-    public static List<String> listFilesForFolder(File folder, int minFileSize, int maxFileSize, String extensionFilter, List<String> list) {
+    public static void listFilesForFolder(File folder, int minFileSize, int maxFileSize, String extensionFilter, List<String> list) {
 
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
@@ -20,6 +20,5 @@ public class FS {
                     list.add(fileEntry.getAbsolutePath());
             }
         }
-        return list;
     }
 }
