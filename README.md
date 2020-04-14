@@ -32,6 +32,33 @@ const hmacAlgorithm = CONSTANTS.HmacAlgorithms.HmacSHA512;
 const EventName = CONSTANTS.Events.onBatchReccieved;
 
 ```
+### Cross Platform API
+
+Native hashing is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soul makes a PR), you can use `JSHash`:
+
+#### Hash Algorithm :
+
+`"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "keccak"`
+
+#### API:
+
+```
+JSHash(message: string, algorithm: string):Promise<string>;
+```
+
+#### Example :
+
+```javascript
+import { JSHash, CONSTANTS } from "react-native-hash";
+
+JSHash("message", CONSTANTS.HashAlgorithms.keccak)
+  .then(hash => console.log(hash))
+  .catch(e => console.log(e));
+```
+
+- keccak implementation defaults to 512 and is not tested against all attack vectors.
+
+check out the [example](https://github.com/Drazail/react-native-hash/blob/f992bdb09b1df5652a3b1590ca6e903a077ad4e6/example/App.js#L88-L90) for more information.
 
 ### Android
 
@@ -131,33 +158,6 @@ RNHash.generateHmac("message", "secretKey", CONSTANTS.HmacAlgorithms.HmacSHA512)
 
 check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c12f61d968aa4c647a1c98f06ca31e591381/example/App.js#L47-L54) for more information.
 
-### Other Platforms
-
-Native hashing is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soul makes a PR), you can use `JSHash`:
-
-#### Hash Algorithm :
-
-`"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "keccak"`
-
-#### API:
-
-```
-JSHash(message: string, algorithm: string):Promise<string>;
-```
-
-#### Example :
-
-```javascript
-import { JSHash, CONSTANTS } from "react-native-hash";
-
-JSHash("message", CONSTANTS.HashAlgorithms.keccak)
-  .then(hash => console.log(hash))
-  .catch(e => console.log(e));
-```
-
-- keccak implementation defaults to 512 and is not tested against all attack vectors.
-
-check out the [example](https://github.com/Drazail/react-native-hash/blob/f992bdb09b1df5652a3b1590ca6e903a077ad4e6/example/App.js#L88-L90) for more information.
 
 ## Topics
 
