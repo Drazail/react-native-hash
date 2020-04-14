@@ -34,7 +34,7 @@ const EventName = CONSTANTS.Events.onBatchReccieved;
 ```
 ### Cross Platform API
 
-Native hashing is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soul makes a PR), you can use `JSHash`:
+[Native hashing](https://github.com/Drazail/react-native-hash/blob/master/README.md#android) is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soul makes a PR), you can use `JSHash`:
 
 #### Hash Algorithm :
 
