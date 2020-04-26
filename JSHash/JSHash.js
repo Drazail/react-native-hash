@@ -21,27 +21,27 @@ const {
  */
 const hashString = async (string, algorithm) => {
   switch (algorithm) {
-    case 'md5': {
+    case 'MD5': {
       const md5hash = await MD5(string);
       return Hex.stringify(md5hash);
     }
-    case 'sha1': {
+    case 'SHA-1': {
       const sha1hash = await SHA1(string);
       return Hex.stringify(sha1hash);
     }
-    case 'sha256': {
+    case 'SHA-256': {
       const sha256hash = await SHA256(string);
       return Hex.stringify(sha256hash);
     }
-    case 'sha224': {
+    case 'SHA-224': {
       const sha224hash = await SHA224(string);
       return Hex.stringify(sha224hash);
     }
-    case 'sha512': {
+    case 'SHA-512': {
       const sha512hash = await SHA512(string);
       return Hex.stringify(sha512hash);
     }
-    case 'sha384': {
+    case 'SHA-384': {
       const sha384hash = await SHA384(string);
       return Hex.stringify(sha384hash);
     }
