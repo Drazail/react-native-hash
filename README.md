@@ -32,26 +32,45 @@ const hmacAlgorithm = CONSTANTS.HmacAlgorithms.HmacSHA512;
 const EventName = CONSTANTS.Events.onBatchReccieved;
 
 ```
-### Cross Platform API
+***
+# Cross Platform API
 
-[Native hashing](https://github.com/Drazail/react-native-hash/blob/master/README.md#android) is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soul makes a PR), you can use `JSHash`:
+[Native hashing](https://github.com/Drazail/react-native-hash/blob/master/README.md#android) is only implemented on Android, however, until I get around writing native modules for other platforms ( or if some kind soul makes a PR), you can use `JSHash` and `JSHmac`:
+
+***
+**NOTE**
+
+if you are using expo, `JSHash` and `JSHmac` should work out of the box, native implementations however, will require you to eject the project.
+***
+
 
 #### Hash Algorithm :
 
-`"md5" | "sha1" | "sha256" | "sha224" | "sha512" | "sha384" | "keccak"`
+`"MD2" | "MD5"| "SHA-1"| "SHA-224" | "SHA-256" | "SHA-384" | "SHA-512"| "keccak"`
+
+#### HMac Algorithm :
+
+`"HmacMD5" | "HmacSHA1" | "HmacSHA224" | "HmacSHA256" | "HmacSHA384" | "HmacSHA512"`
 
 #### API:
 
 ```
 JSHash(message: string, algorithm: string):Promise<string>;
 ```
+```
+JSHmac(message: string, secret: string, algorithm: string): Promise<string>;
+```
 
 #### Example :
 
 ```javascript
-import { JSHash, CONSTANTS } from "react-native-hash";
+import { JSHash, JSHmac, CONSTANTS } from "react-native-hash";
 
-JSHash("message", CONSTANTS.HashAlgorithms.keccak)
+JSHash("message", CONSTANTS.HashAlgorithms.sha256)
+  .then(hash => console.log(hash))
+  .catch(e => console.log(e));
+
+JSHmac("message", "SecretKey", CONSTANTS.HmacAlgorithms.HmacSHA256)
   .then(hash => console.log(hash))
   .catch(e => console.log(e));
 ```
@@ -60,7 +79,9 @@ JSHash("message", CONSTANTS.HashAlgorithms.keccak)
 
 check out the [example](https://github.com/Drazail/react-native-hash/blob/f992bdb09b1df5652a3b1590ca6e903a077ad4e6/example/App.js#L88-L90) for more information.
 
-### Android
+***
+
+# Android
 
 #### Hash Algorithm :
 
@@ -172,7 +193,6 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c1
 
 - SHA-3
 - other Keccak lengths
-- fully implementing HMAC
 
 ### Status
 
@@ -183,7 +203,9 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c1
 | hash network responses | :x:                | :heavy_check_mark: | :x:                |
 | hash bundle assets     | :x:                | :x:                | :x:                |
 | hash strings           | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
-| HMAC                   | :x:                | :heavy_check_mark: | :x:                |
+| HMAC                   | :heavy_check_mark:                | :heavy_check_mark: | :heavy_check_mark:     |
+
+
 
 - all PRs are welcome
 

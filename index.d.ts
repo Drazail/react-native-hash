@@ -59,3 +59,7 @@ export namespace CONSTANTS {
 export namespace JSHash {
     export function hashString(message: string, algorithm: string): Promise<string>;
 }
+
+export namespace JSHmac {
+    export function hashString(message: string, secret: string, algorithm: string): Promise<string>;
+}

@@ -6,10 +6,10 @@ import Hash from './lib/index.js';
 const {
   MD5,
   SHA1,
-  SHA256,
   SHA224,
-  SHA512,
+  SHA256,
   SHA384,
+  SHA512,
   SHA3,
   format: { Hex },
 } = Hash;
@@ -22,32 +22,32 @@ const {
 const hashString = async (string, algorithm) => {
   switch (algorithm) {
     case 'MD5': {
-      const md5hash = await MD5(string);
-      return Hex.stringify(md5hash);
+      const hash = await MD5(string);
+      return Hex.stringify(hash);
     }
     case 'SHA-1': {
-      const sha1hash = await SHA1(string);
-      return Hex.stringify(sha1hash);
+      const hash = await SHA1(string);
+      return Hex.stringify(hash);
     }
     case 'SHA-256': {
-      const sha256hash = await SHA256(string);
-      return Hex.stringify(sha256hash);
+      const hash = await SHA256(string);
+      return Hex.stringify(hash);
     }
     case 'SHA-224': {
-      const sha224hash = await SHA224(string);
-      return Hex.stringify(sha224hash);
+      const hash = await SHA224(string);
+      return Hex.stringify(hash);
     }
     case 'SHA-512': {
-      const sha512hash = await SHA512(string);
-      return Hex.stringify(sha512hash);
+      const hash = await SHA512(string);
+      return Hex.stringify(hash);
     }
     case 'SHA-384': {
-      const sha384hash = await SHA384(string);
-      return Hex.stringify(sha384hash);
+      const hash = await SHA384(string);
+      return Hex.stringify(hash);
     }
     case 'keccak': {
-      const keccakhash = await SHA3(string);
-      return Hex.stringify(keccakhash);
+      const hash = await SHA3(string);
+      return Hex.stringify(hash);
     }
     default:
       throw new Error(`${algorithm} algorithm is not suported`);

@@ -19,6 +19,7 @@ const CONSTANTS = {
     HmacSHA256: 'HmacSHA256',
     HmacSHA384: 'HmacSHA384',
     HmacSHA512: 'HmacSHA512',
+    HmacKeccak: 'HmacKeccak',
     PBEwithHmacSHA: 'PBEwithHmacSHA',
     PBEwithHmacSHA1: 'PBEwithHmacSHA1',
     PBEwithHmacSHA224: 'PBEwithHmacSHA224',
