@@ -210,3 +210,14 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c1
 - all PRs are welcome
 
 [![Package Quality](https://npm.packagequality.com/badge/react-native-hash.png)](https://packagequality.com/#?package=react-native-hash)
+
+---
+#### Credits
+
+JSHash and JSHMac functions use some Open Source code snippets. You can find the source code of their open source projects along with license information below. We acknowledge and are grateful to these developers for their contributions to open source.
+
+- Project: crypto-es https://github.com/entronad/crypto-es
+
+- License (MIT) https://github.com/entronad/crypto-es/blob/master/LICENSE
+
+---
