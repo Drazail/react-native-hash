@@ -38,11 +38,11 @@
   "readmeFilename": "README.md",
   "peerDependencies": {
     "react": "^16.8.1",
-    "react-native": "^0.63.3"
+    "react-native": "^0.64.2"
   },
   "devDependencies": {
     "react": "^17.0.1",
-    "react-native": "^0.63.3",
+    "react-native": "^0.64.2",
     "@babel/core": "^7.7.7",
     "@babel/plugin-transform-modules-commonjs": "^7.7.5",
     "babel-jest": "^26.0.1",
