@@ -5,9 +5,13 @@
 `$ npm install react-native-hash --save`
 
 ---
-⚠️WARNING⚠️
+## compatibility
 
-❗ Since **`react-native 0.64.0`**, the support for Android APIs `16` to `20` has been dropped, if you need to suppord APIs bellow `21`, consider using **`1.x`** releases of this library.
+|           Criteria              | Release Version                |
+| ---------------------- | ------------------ |
+|  Android API $\le$ `15`       | unsupported                |
+| `16` $\le$ Android API $\le$ `20`       | 1.x                |
+| Gradle $\geq$ `7`    | $\geq$ 2.0.1                |
 
 ---
 
