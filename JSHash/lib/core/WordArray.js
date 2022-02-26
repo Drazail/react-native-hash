@@ -2,7 +2,6 @@
 /* eslint-disable no-use-before-define */
 
 import Base from './Base.js';
-import Hex from './Hex.js';
 
 /**
  * An array of 32-bit words.
@@ -35,13 +34,13 @@ export default class WordArray extends Base {
     // Convert other array views to uint8
     if (
       typedArray instanceof Int8Array
-        || typedArray instanceof Uint8ClampedArray
-        || typedArray instanceof Int16Array
-        || typedArray instanceof Uint16Array
-        || typedArray instanceof Int32Array
-        || typedArray instanceof Uint32Array
-        || typedArray instanceof Float32Array
-        || typedArray instanceof Float64Array
+      || typedArray instanceof Uint8ClampedArray
+      || typedArray instanceof Int16Array
+      || typedArray instanceof Uint16Array
+      || typedArray instanceof Int32Array
+      || typedArray instanceof Uint32Array
+      || typedArray instanceof Float32Array
+      || typedArray instanceof Float64Array
     ) {
       typedArray = new Uint8Array(
         typedArray.buffer,
@@ -125,8 +124,22 @@ export default class WordArray extends Base {
      *     var string = wordArray.toString();
      *     var string = wordArray.toString(CryptoJS.enc.Utf8);
      */
-  toString(encoder = Hex) {
-    return encoder.stringify(this);
+  toString(encoder = null) {
+
+    if (encoder != null) { return encoder.stringify(this); }
+
+    // Shortcuts
+    const { words, sigBytes } = this;
+
+    // Convert
+    const hexChars = [];
+    for (let i = 0; i < sigBytes; i += 1) {
+      const bite = (words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+      hexChars.push((bite >>> 4).toString(16));
+      hexChars.push((bite & 0x0f).toString(16));
+    }
+
+    return hexChars.join('');
   }
 
   /**
@@ -156,7 +169,7 @@ export default class WordArray extends Base {
       for (let i = 0; i < thatSigBytes; i += 1) {
         const thatByte = (thatWords[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
         thisWords[(thisSigBytes + i) >>> 2]
-            |= thatByte << (24 - ((thisSigBytes + i) % 4) * 8);
+          |= thatByte << (24 - ((thisSigBytes + i) % 4) * 8);
       }
     } else {
       // Copy one word at a time
