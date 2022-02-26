@@ -9,9 +9,9 @@
 
 |           Criteria              | Release Version                |
 | ---------------------- | ------------------ |
-|  Android API $\le$ `15`       | unsupported                |
-| `16` $\le$ Android API $\le$ `20`       | 1.x                |
-| Gradle $\geq$ `7`    | $\geq$ 2.0.1                |
+|  Android API < `16`       | unsupported                |
+| `16` <= Android API < `21`       | 1.x                |
+| Gradle >= `7`    | >= 2.0.1                |
 
 ---
 
