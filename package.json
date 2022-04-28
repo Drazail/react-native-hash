@@ -45,7 +45,7 @@
     "react-native": "^0.67.1",
     "@babel/core": "^7.15.5",
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",
-    "babel-jest": "^27.1.0",
+    "babel-jest": "^28.0.2",
     "eslint": "^8.0.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.24.2",
