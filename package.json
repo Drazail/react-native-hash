@@ -41,7 +41,7 @@
     "react-native": "^0.67.1"
   },
   "devDependencies": {
-    "react": "^17.0.1",
+    "react": "^18.1.0",
     "react-native": "^0.67.1",
     "@babel/core": "^7.15.5",
     "@babel/plugin-transform-modules-commonjs": "^7.15.4",
