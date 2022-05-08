@@ -1,5 +1,3 @@
-import groovy.json.JsonSlurper
-
 // android/build.gradle
 
 // based on:
@@ -32,11 +30,11 @@ buildscript {
     if (project == rootProject) {
         repositories {
             google()
-            jcenter()
+            mavenCentral()
         }
         dependencies {
             classpath 'com.android.tools.build:gradle:4.0.2'
-            classpath "de.mannodermaus.gradle.plugins:android-junit5:1.3.2.0"
+            classpath("de.mannodermaus.gradle.plugins:android-junit5:1.8.2.0")
         }
     }
 }
@@ -78,7 +76,7 @@ repositories {
         url "$rootDir/../node_modules/jsc-android/dist"
     }
     google()
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -102,12 +100,12 @@ afterEvaluate { project ->
     }
 
     task androidJavadocJar(type: Jar, dependsOn: androidJavadoc) {
-        classifier = 'javadoc'
+        archiveClassifier.set("javadoc")
         from androidJavadoc.destinationDir
     }
 
     task androidSourcesJar(type: Jar) {
-        classifier = 'sources'
+        archiveClassifier.set("sources")
         from android.sourceSets.main.java.srcDirs
         include '**/*.java'
     }
