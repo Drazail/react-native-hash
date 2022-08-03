@@ -1,7 +1,7 @@
 {
   "name": "react-native-hash",
   "title": "React Native Hash",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "A hashing library for react-native",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,9 @@
     "react",
     "react-native",
     "react-native-hash",
+    "hooks",
+    "custom-hooks",
+    "react-hooks",
     "hash",
     "MD2",
     "MD5",
@@ -37,19 +40,21 @@
   "license": "Apache-2.0",
   "readmeFilename": "README.md",
   "peerDependencies": {
-    "react": "^17.0.2",
-    "react-native": "^0.68.1"
+    "react": "^18",
+    "react-native": "^0.7"
   },
   "devDependencies": {
-    "react": "^17.0.2",
-    "react-native": "^0.68.1",
-    "@babel/core": "^7.15.5",
-    "@babel/plugin-transform-modules-commonjs": "^7.15.4",
-    "babel-jest": "^28.0.3",
-    "eslint": "^8.0.0",
+    "react": "^18",
+    "react-native": "^0.7",
+    "@babel/core": "^7.18.10",
+    "@babel/plugin-transform-modules-commonjs": "^7.18.6",
+    "@testing-library/react-native": "^11.0.0",
+    "babel-jest": "^28.1.3",
+    "eslint": "^8.21.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.24.2",
-    "jest": "^28.0.3"
+    "eslint-plugin-import": "^2.26.0",
+    "jest": "^28.1.3",
+    "react-test-renderer": "^18.2.0"
   },
   "jest": {
     "testRegex": "(/__tests__/.*\\.test\\.js)$",

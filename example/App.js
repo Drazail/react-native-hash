@@ -8,13 +8,22 @@
 
 import React, {useState, useEffect} from 'react';
 import {
+  View,
+  ScrollView,
   Text,
   PermissionsAndroid,
   Button,
+  TextInput,
   DeviceEventEmitter,
 } from 'react-native';
 
-import RNHash, {JSHash, CONSTANTS} from 'react-native-hash';
+import RNHash, {
+  JSHash,
+  JSHmac,
+  useHash,
+  useHmac,
+  CONSTANTS,
+} from 'react-native-hash';
 
 async function requestPermission() {
   try {
@@ -39,8 +48,12 @@ async function requestPermission() {
   }
 }
 
-const App: () => React$Node = () => {
+const App = () => {
   requestPermission();
+
+  const [textToHash, onHashTextChange] = React.useState('textToHash');
+  const [textToHmac, onHmacTextChange] = React.useState('textToHmac');
+
   const [urlHash, setUrlHash] = useState('NA');
   const [fileHash, setFileHash] = useState('NA');
   const [stringlHash, setStringHash] = useState('NA');
@@ -48,16 +61,41 @@ const App: () => React$Node = () => {
   const [HMACString, setHMACString] = useState('NA');
   const [folderString, setFolderString] = useState('NA');
   const [eventsString, setEventsString] = useState('NA');
+  const [hashed, algo, setHashMessage] = useHash();
+  const [hmac, setHmacAlgo, setHmacMessage, setHmacSecret] = useHmac();
 
   useEffect(() => {
-    DeviceEventEmitter.addListener(CONSTANTS.Events.onBatchReccieved, data => {
-      console.log(Object.keys(data.results).length);
-      setEventsString(JSON.stringify(data));
-    });
+    DeviceEventEmitter.addListener(
+      CONSTANTS.Events.onBatchReccieved,
+      (data) => {
+        console.log(Object.keys(data.results).length);
+        setEventsString(JSON.stringify(data));
+      },
+    );
   }, []);
 
   return (
-    <>
+    <ScrollView>
+      <View style={{padding: 10}}>
+        <TextInput
+          style={{borderColor: 'black', borderWidth: 1, borderRadius: 5}}
+          onChangeText={(text) => {
+            onHashTextChange(text);
+            setHashMessage(text);
+          }}
+          value={textToHash}
+        />
+        <Text>hash : {hashed}</Text>
+        <TextInput
+          style={{borderColor: 'black', borderWidth: 1, borderRadius: 5}}
+          onChangeText={(text) => {
+            onHmacTextChange(text);
+            setHmacMessage(text);
+          }}
+          value={textToHmac}
+        />
+        <Text>hmac : {hmac}</Text>
+      </View>
       <Button
         title="press to hash URL"
         onPress={() => {
@@ -68,8 +106,8 @@ const App: () => React$Node = () => {
             {'Content-type': 'application/json'},
             CONSTANTS.HashAlgorithms.sha256,
           )
-            .then(b => setUrlHash(b))
-            .catch(er => console.log(er));
+            .then((b) => setUrlHash(b))
+            .catch((er) => console.log(er));
         }}>
         press to hash URL
       </Button>
@@ -81,8 +119,8 @@ const App: () => React$Node = () => {
             '//storage/emulated/0/Download/k.mp3',
             CONSTANTS.HashAlgorithms.sha256,
           )
-            .then(b => setFileHash(b))
-            .catch(er => console.log(er))
+            .then((b) => setFileHash(b))
+            .catch((er) => console.log(er))
         }>
         press to hash File
       </Button>
@@ -100,8 +138,8 @@ const App: () => React$Node = () => {
             -1,
             0,
           )
-            .then(b => setFolderString(JSON.stringify(b)))
-            .catch(er => console.log(er))
+            .then((b) => setFolderString(JSON.stringify(b)))
+            .catch((er) => console.log(er))
         }>
         press to hash Folder
       </Button>
@@ -119,10 +157,10 @@ const App: () => React$Node = () => {
             3,
             1000,
           )
-            .then(b => {
+            .then((b) => {
               setFolderString(JSON.stringify(b));
             })
-            .catch(er => console.log(er))
+            .catch((er) => console.log(er))
         }>
         press to hash Folder with events
       </Button>
@@ -135,8 +173,8 @@ const App: () => React$Node = () => {
             'The quick brown fox jumps over the lazy dog',
             CONSTANTS.HashAlgorithms.sha256,
           )
-            .then(b => setStringHash(b))
-            .catch(er => console.log(er))
+            .then((b) => setStringHash(b))
+            .catch((er) => console.log(er))
         }>
         press to hash String
       </Button>
@@ -149,8 +187,8 @@ const App: () => React$Node = () => {
             'The quick brown fox jumps over the lazy dog',
             CONSTANTS.HashAlgorithms.keccak,
           )
-            .then(b => setJsStringHash(b))
-            .catch(er => console.log(er))
+            .then((b) => setJsStringHash(b))
+            .catch((er) => console.log(er))
         }>
         press to hash String
       </Button>
@@ -164,13 +202,13 @@ const App: () => React$Node = () => {
             'SecretKey',
             CONSTANTS.HmacAlgorithms.HmacSHA512,
           )
-            .then(b => setHMACString(b))
-            .catch(er => console.log(er))
+            .then((b) => setHMACString(b))
+            .catch((er) => console.log(er))
         }>
         press to hash String
       </Button>
       <Text>hmac: {HMACString}</Text>
-    </>
+    </ScrollView>
   );
 };
 

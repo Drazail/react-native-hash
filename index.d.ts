@@ -63,3 +63,23 @@ export default RNHash;
 export function JSHash(message: string, algorithm: string): Promise<string>;
 
 export function JSHmac(message: string, secret: string, algorithm: string): Promise<string>;
+
+export function useHash(
+  hmacAlgo?: CONSTANTS.HashAlgorithms = CONSTANTS.HashAlgorithms.md5,
+  initialMessage: ?string = "hello World"
+): [
+  hashed: string,
+  setMessage: (message: string) => Promise<void>,
+  setAlgo: (algo: string) => Promise<void>
+];
+
+export function useHmac(
+  hmacAlgo?: CONSTANTS.HmacAlgorithms = CONSTANTS.HmacAlgorithms.HmacMD5,
+  initialMessage: ?string = "hello World",
+  initialSecret: ?string = "SecretKey"
+): [
+  hashed: string,
+  setMessage: (message: string) => Promise<void>,
+  setAlgo: (algo: string) => Promise<void>,
+  setSecret: (secret: string) => Promise<void>
+];

@@ -90,6 +90,47 @@ JSHmac("message", "SecretKey", CONSTANTS.HmacAlgorithms.HmacSHA256)
 
 check out the [example](https://github.com/Drazail/react-native-hash/blob/f992bdb09b1df5652a3b1590ca6e903a077ad4e6/example/App.js#L88-L90) for more information.
 
+# React Hooks
+
+Following hooks are available:
+
+```javaScript
+useHash(
+  hmacAlgo?: string = "MD5",
+  initialMessage: ?string = "hello World",
+): [
+  hashed: string,
+  setMessage: (message: string) => Promise<void>,
+  setAlgo: (algo: string) => Promise<void>
+];
+```
+
+```javaScript
+useHmac(
+  hmacAlgo?: string = "HmacMD5",
+  initialMessage: ?string = "hello World",
+  initialSecret: ?string = "SecretKey"
+): [
+  hashed: string,
+  setMessage: (message: string) => Promise<void>,
+  setAlgo: (algo: string) => Promise<void>,
+  setSecret: (secret: string) => Promise<void>
+];
+```
+## Usage
+
+```javaScript
+const [hashedMessage, setHashAlgo, setHashMessage] = useHash();
+const [hmac, setHmacAlgo, setHmacMessage, setHmacSecret] = useHmac();
+```
+
+`hashedMessage` and `hmac` will update after a call to one of the setters is resolved.
+
+note that all the setter functions of these two hooks are async and will return a `promise`.
+
+check out the [example] for more information.
+
+
 ***
 
 # Android
