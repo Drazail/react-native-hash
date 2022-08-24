@@ -67,10 +67,19 @@ export function JSHmac(message: string, secret: string, algorithm: string): Prom
 export function useHash(
   hmacAlgo?: typeof CONSTANTS.HashAlgorithms[keyof typeof CONSTANTS.HashAlgorithms],
   initialMessage?: string
-): [string, (message: string) => Promise<void>, (algo: string) => Promise<void>];
+): [
+  hashed: string,
+  setMessage: (message: string) => Promise<void>,
+  setAlgo: (algo: string) => Promise<void>
+];
 
 export function useHmac(
   hmacAlgo?: typeof CONSTANTS.HashAlgorithms[keyof typeof CONSTANTS.HashAlgorithms],
   initialMessage?: string,
   initialSecret?: string
-): [string, (message: string) => Promise<void>, (algo: string) => Promise<void>, (secret: string) => Promise<void>];
+): [
+  hashed: string,
+  setMessage: (message: string) => Promise<void>,
+  setAlgo: (algo: string) => Promise<void>,
+  setSecret: (secret: string) => Promise<void>
+];
