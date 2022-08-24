@@ -74,7 +74,7 @@ export function useHash(
 ];
 
 export function useHmac(
-  hmacAlgo?: typeof CONSTANTS.HashAlgorithms[keyof typeof CONSTANTS.HashAlgorithms],
+  hmacAlgo?: typeof CONSTANTS.HmacAlgorithms[keyof typeof CONSTANTS.HmacAlgorithms],
   initialMessage?: string,
   initialSecret?: string
 ): [
