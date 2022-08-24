@@ -262,6 +262,7 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/6548c1
 - all PRs are welcome
 
 [![Package Quality](https://npm.packagequality.com/badge/react-native-hash.png)](https://packagequality.com/#?package=react-native-hash)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDrazail%2Freact-native-hash.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FDrazail%2Freact-native-hash?ref=badge_shield)
 
 ---
 #### Credits
@@ -273,3 +274,7 @@ JSHash and JSHMac functions use some Open Source code snippets. You can find the
 - License (MIT) https://github.com/entronad/crypto-es/blob/master/LICENSE
 
 ---
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FDrazail%2Freact-native-hash.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FDrazail%2Freact-native-hash?ref=badge_large)
