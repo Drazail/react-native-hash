@@ -29,28 +29,28 @@ declare namespace RNHash {
 
 export namespace CONSTANTS {
     export namespace HashAlgorithms {
-        export const md2: string;
-        export const md5: string;
-        export const sha1: string;
-        export const sha224: string;
-        export const sha256: string;
-        export const sha384: string;
-        export const sha512: string;
-        export const keccak: string;
+        export const md2: 'MD2';
+        export const md5: 'MD5';
+        export const sha1: 'SHA-1';
+        export const sha224: 'SHA-224';
+        export const sha256: 'SHA-256';
+        export const sha384: 'SHA-384';
+        export const sha512: 'SHA-512';
+        export const keccak: 'keccak';
     }
     export namespace HmacAlgorithms {
-        export const HmacMD5: string;
-        export const HmacSHA1: string;
-        export const HmacSHA224: string;
-        export const HmacSHA256: string;
-        export const HmacSHA384: string;
-        export const HmacSHA512: string;
-        export const PBEwithHmacSHA: string;
-        export const PBEwithHmacSHA1: string;
-        export const PBEwithHmacSHA224: string;
-        export const PBEwithHmacSHA256: string;
-        export const PBEwithHmacSHA384: string;
-        export const PBEwithHmacSHA512: string;
+        export const HmacMD5: 'HmacMD5';
+        export const HmacSHA1: 'HmacSHA1';
+        export const HmacSHA224: 'HmacSHA224';
+        export const HmacSHA256: 'HmacSHA256';
+        export const HmacSHA384: 'HmacSHA384';
+        export const HmacSHA512: 'HmacSHA512';
+        export const PBEwithHmacSHA: 'PBEwithHmacSHA';
+        export const PBEwithHmacSHA1: 'PBEwithHmacSHA1';
+        export const PBEwithHmacSHA224: 'PBEwithHmacSHA224';
+        export const PBEwithHmacSHA256: 'PBEwithHmacSHA256';
+        export const PBEwithHmacSHA384: 'PBEwithHmacSHA384';
+        export const PBEwithHmacSHA512: 'PBEwithHmacSHA512';
     }
     export namespace Events {
         export const onBatchReccieved: string;
@@ -65,8 +65,8 @@ export function JSHash(message: string, algorithm: string): Promise<string>;
 export function JSHmac(message: string, secret: string, algorithm: string): Promise<string>;
 
 export function useHash(
-  hmacAlgo?: CONSTANTS.HashAlgorithms = CONSTANTS.HashAlgorithms.md5,
-  initialMessage: ?string = "hello World"
+  hmacAlgo?: typeof CONSTANTS.HashAlgorithms[keyof typeof CONSTANTS.HashAlgorithms],
+  initialMessage?: string
 ): [
   hashed: string,
   setMessage: (message: string) => Promise<void>,
@@ -74,9 +74,9 @@ export function useHash(
 ];
 
 export function useHmac(
-  hmacAlgo?: CONSTANTS.HmacAlgorithms = CONSTANTS.HmacAlgorithms.HmacMD5,
-  initialMessage: ?string = "hello World",
-  initialSecret: ?string = "SecretKey"
+  hmacAlgo?: typeof CONSTANTS.HmacAlgorithms[keyof typeof CONSTANTS.HmacAlgorithms],
+  initialMessage?: string,
+  initialSecret?: string
 ): [
   hashed: string,
   setMessage: (message: string) => Promise<void>,
