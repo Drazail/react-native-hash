@@ -9,11 +9,15 @@ example
 
 # node.js
 #
+
+yarn.lock
 node_modules/
 npm-debug.log
 yarn-error.log
 package-lock.json
 yarn.lock
+__tests__/
+coverage/
 
 # Xcode
 #
