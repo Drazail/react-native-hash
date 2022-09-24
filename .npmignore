@@ -2,6 +2,7 @@
 coverage/
 # Examples
 example
+
 # OSX
 #
 .DS_Store
@@ -11,9 +12,7 @@ example
 node_modules/
 npm-debug.log
 yarn-error.log
-.eslintrc
-__tests__/
-coverage/
+package-lock.json
 yarn.lock
 
 # Xcode
@@ -34,20 +33,39 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-project.xcworkspace
+ios/.xcode.env.local
 
 # Android/IntelliJ
 #
 build/
-build
 .idea
 .gradle
 local.properties
 *.iml
-test/
-test
+*.hprof
+.cxx/
 
 # BUCK
 buck-out/
 \.buckd/
 *.keystore
+!debug.keystore
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+
+# Bundle artifact
+*.jsbundle
+
+# Ruby / CocoaPods
+/ios/Pods/
+/vendor/bundle/
