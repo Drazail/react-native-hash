@@ -19,16 +19,16 @@
 
 ### Constants
 
-```
-HashAlgorithms : Record<string, string>;
-```
-
-```
-HmacAlgorithms : Record<string, string>;
+```typescript
+HashAlgorithms: Record<string, string>;
 ```
 
+```typescript
+HmacAlgorithms: Record<string, string>;
 ```
-Events : Record<string, string>;
+
+```typescript
+Events: Record<string, string>;
 ```
 
 #### Example
@@ -65,10 +65,10 @@ if you are using expo, `JSHash` and `JSHmac` should work out of the box, native 
 
 #### API:
 
-```
+```typescript
 JSHash(message: string, algorithm: string):Promise<string>;
 ```
-```
+```typescript
 JSHmac(message: string, secret: string, algorithm: string): Promise<string>;
 ```
 
@@ -94,10 +94,10 @@ check out the [example](https://github.com/Drazail/react-native-hash/blob/f992bd
 
 Following hooks are available:
 
-```javaScript
+```javascript
 useHash(
-  hmacAlgo?: string = "MD5",
-  initialMessage: ?string = "hello World",
+  hashAlgo?: string = "MD5",
+  initialMessage?: string = "hello World",
 ): [
   hashed: string,
   setMessage: (message: string) => Promise<void>,
@@ -105,11 +105,11 @@ useHash(
 ];
 ```
 
-```javaScript
+```javascript
 useHmac(
   hmacAlgo?: string = "HmacMD5",
-  initialMessage: ?string = "hello World",
-  initialSecret: ?string = "SecretKey"
+  initialMessage?: string = "hello World",
+  initialSecret?: string = "SecretKey",
 ): [
   hashed: string,
   setMessage: (message: string) => Promise<void>,
@@ -119,7 +119,7 @@ useHmac(
 ```
 ## Usage
 
-```javaScript
+```javascript
 const [hashedMessage, setHashAlgo, setHashMessage] = useHash();
 const [hmac, setHmacAlgo, setHmacMessage, setHmacSecret] = useHmac();
 ```
@@ -146,11 +146,11 @@ check out the [example] for more information.
 
 #### API
 
-```
-hashFile(uri: string, algorithm: string):Promise<string>;
+```typescript
+hashFile(uri: string, algorithm: string): Promise<string>;
 ```
 
-```
+```typescript
 hashFilesForFolder(uri: string, algorithm: string, minFileSize: number, maxFileSize: number, extensionFilter: string, batchSize: number, delay: number ):  Promise<{FilesCount:number, isFinalBatch: bool, batchNumber: number, results: Record<string, string>}>;
 ```
 
@@ -160,22 +160,22 @@ hashFilesForFolder(uri: string, algorithm: string, minFileSize: number, maxFileS
 * the delay parameter determines how many ms should the native thread waits before sending the next batch.
 * check `"press to hash Folder with events"` and `"press to hash Folder"` in the example app for more details
 
-```
+```typescript
 hashFilesForFolders(uri: string, algorithm: string, minFileSize: number, maxFileSize: number, extensionFilter: string, batchSize: number, delay: number ):  Promise<{FilesCount:number, isFinalBatch: bool, batchNumber: number, results: Record<string, string>}>;
 ```
 
 * behaves the same as the `hashFilesForFolder`, but reccieves an String array as first argument.
 
-```
-hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>, algorithm: string):Promise<string>;
-```
-
-```
-hashString(message: string, algorithm: string):Promise<string>;
+```typescript
+hashUrl(url: string, HTTPMethod: string, headers: Record<string, string>, algorithm: string): Promise<string>;
 ```
 
+```typescript
+hashString(message: string, algorithm: string): Promise<string>;
 ```
-generateHmac(message: string, key: string, algorithm: string):Promise<string>;
+
+```typescript
+generateHmac(message: string, key: string, algorithm: string): Promise<string>;
 ```
 
 #### Example
