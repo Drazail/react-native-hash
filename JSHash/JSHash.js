@@ -50,7 +50,7 @@ const hashString = async (string, algorithm) => {
       return Hex.stringify(hash);
     }
     default:
-      throw new Error(`${algorithm} algorithm is not suported`);
+      throw new Error(`${algorithm} algorithm is not supported`);
   }
 };
 

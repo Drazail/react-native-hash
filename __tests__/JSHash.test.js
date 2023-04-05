@@ -83,6 +83,6 @@ describe('JSHash hasString Function', () => {
   test('badHash', async () => {
     await expect(
       hashString('value', 'badHashAlgo'),
-    ).rejects.toEqual(new Error('badHashAlgo algorithm is not suported'));
+    ).rejects.toEqual(new Error('badHashAlgo algorithm is not supported'));
   });
 });
