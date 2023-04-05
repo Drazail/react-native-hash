@@ -48,7 +48,7 @@ const hmacString = async (string, key, algorithm) => {
       return Hex.stringify(HMac);
     }
     default:
-      throw new Error(`${algorithm} algorithm is not suported`);
+      throw new Error(`${algorithm} algorithm is not supported`);
   }
 };
 

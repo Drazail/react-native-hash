@@ -73,6 +73,6 @@ describe('JSHash hasString Function', () => {
   test('badHmac', async () => {
     await expect(
       hmacString('value', 'SecretKey', 'badHmacAlgo'),
-    ).rejects.toEqual(new Error('badHmacAlgo algorithm is not suported'));
+    ).rejects.toEqual(new Error('badHmacAlgo algorithm is not supported'));
   });
 });
